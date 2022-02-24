@@ -1,0 +1,32 @@
+--1
+SELECT 
+    s.dsStatus,
+    COUNT(1) as Total
+FROM 
+tb_Processo p
+JOIN tbStatus s ON(p.idStatus = s.idStatus)
+GROUP BY s.dsStatus
+
+--2
+SELECT 
+    p.nroProceso,
+    MAX(p.dtAndamento) as MaiorData
+FROM 
+tb_Processo p
+JOIN tb_Andamento a ON(p.idProcesso = a.idProcesso)
+WHERE DATEPART(p.DtEncerramento,YEAR) = 2013
+GROUP BY  p.nroProceso
+
+--3
+SELECT 
+   DtEncerramento,	
+   COUNT(1) as Total
+FROM tb_Processo
+HAVING COUNT(DtEncerramento) > 5
+GROUP BY DtEncerramento
+
+--4
+SELECT 
+   REPLICATE(0, 12 - LEN(nroProcesso)) + RTrim(nroProcesso) 
+FROM 
+tb_Processo
